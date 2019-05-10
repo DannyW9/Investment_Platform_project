@@ -1,14 +1,23 @@
 <template lang="html">
- <div>
-   <NavBar/>
+
+
+
+ <div id='app'>
+    <NavBar/>
    <h1>Hello</h1>
-   <PortfolioView />
+   <h1>Investment Hub</h1>
+   <SearchBar/>
+
+   <router-view id='view'/>
+
  </div>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar';
 import PortfolioView from './views/PortfolioView.vue';
+import SearchBar from './components/SearchBar.vue';
+
 export default {
 
   name: 'app',
@@ -16,7 +25,10 @@ export default {
 
   components: {
      PortfolioView,
-     NavBar
+
+     NavBar,
+
+     SearchBar
   }
 
 }

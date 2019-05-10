@@ -1,14 +1,16 @@
 <template lang="html">
   <div class="">
-    <input type="text" v-model='searchValue' placeholder="Search by company name" v-on:input='displaySearchData'>
+    <input type="text" v-model='searchValue' placeholder="Search for Company" v-on:input='displaySearchData'>
     <ul>
-      <li v-for="stock in stockFound">{{stock.name}}</li>
+      <searchItem v-for="stock in stockFound" :stock ='stock'/>
     </ul>
+
   </div>
 </template>
 
 <script>
 import StockService from '@/services/StockService.js'
+import SearchItem from './SearchItem.vue'
 
 export default {
   name: 'SearchBar',
@@ -18,8 +20,10 @@ export default {
       stockFound: [],
       searchValue: '',
       listOfCompanies: [],
-      stockToDisplay: {}
     }
+  },
+  components:{
+    SearchItem
   },
 
   methods:{
@@ -29,23 +33,17 @@ export default {
         console.log(found);
       })
       this.stockFound = found;
-
-      fetch(`https://api.iextrading.com/1.0/stock/${this.stockFound.symbol}/batch?types=quote`)
-      .then(res => res.json())
-      .then(data => this.stockToDisplay = data);
     }
+
   },
   mounted(){
     fetch('https://api.iextrading.com/1.0/ref-data/symbols')
     .then(res => res.json())
     .then(data => this.listOfCompanies = data);
-
-    if (this.stockFound.count() === 1 ){
-      this.stockToDisplay = this.stockFound
-    }
-    }
-
+  }
 }
+
+
 </script>
 
 <style lang="css" scoped>

@@ -1,6 +1,8 @@
 <template lang="html">
 <div class="">
-
+<ul>
+  <listItem v-for="stock in Portfolio" :stock ='stock'/>
+</ul>
 </div>
 </template>
 

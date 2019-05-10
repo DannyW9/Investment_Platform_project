@@ -5,9 +5,11 @@
 </template>
 
 <script>
-import List from '@/components/List.vue';
+import List from '../components/List.vue';
+import StockService from '@/services/StockService.js'
+
 export default {
-  name: portfolioView,
+  name: 'portfolioView',
   data(){
      return {
        portfolio: []
@@ -17,17 +19,10 @@ export default {
     List
   },
   mounted(){
-    this.fetchData();
-
-  },
-  methods: {
-    fetchData(){
-      fetch('http://localhost:3000/api/stocks')
-      .then(res => res.json())
+    StockService.getStocks()
       .then(portfolio => this.portfolio = portfolio)
-
-    }
   }
+
 }
 </script>
 

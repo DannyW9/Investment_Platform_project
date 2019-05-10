@@ -6,14 +6,14 @@
 </template>
 
 <script>
-import PortfolioView from '@/views/PortfolioView.vue';
+import PortfolioView from './views/PortfolioView.vue';
 export default {
 
   name: 'app',
 
 
   components: {
-     portfolioView
+     PortfolioView
   }
 
 }

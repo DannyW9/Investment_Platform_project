@@ -13,7 +13,7 @@ MongoClient.connect('mongodb://localhost:27017')
     const db = client.db('portfolio');
     const stocksCollection = db.collection('stocks');
     const stocksRouter = createRouter(stocksCollection);
-    app.use('/api/stocks')
+    app.use('/api/stocks', stocksRouter);
   })
 
 app.listen(3000, function() {

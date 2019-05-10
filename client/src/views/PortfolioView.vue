@@ -1,12 +1,13 @@
 <template lang="html">
    <div>
-    <List />
+    <List :portfolio= 'portfolio'/>
    </div>
 </template>
 
 <script>
 import List from '../components/List.vue';
-import StockService from '@/services/StockService.js'
+import ListItem from '../components/ListItem.vue';
+import StockService from '@/services/StockService.js';
 
 export default {
   name: 'portfolioView',
@@ -16,7 +17,8 @@ export default {
      }
   },
     components: {
-    List
+    List,
+    ListItem
   },
   mounted(){
     StockService.getStocks()

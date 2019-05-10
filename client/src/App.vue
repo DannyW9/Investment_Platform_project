@@ -2,7 +2,6 @@
  <div id='app'>
    <h1>Investment Hub</h1>
    <SearchBar/>
-   <portfolioView />
 
    <router-view id='view'/>
  </div>

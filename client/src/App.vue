@@ -1,19 +1,25 @@
 <template lang="html">
- <div>
-   <h1>Hello</h1>
-   <PortfolioView />
+ <div id='app'>
+   <h1>Investment Hub</h1>
+   <SearchBar/>
+   <portfolioView />
+
+   <router-view id='view'/>
  </div>
 </template>
 
 <script>
 import PortfolioView from './views/PortfolioView.vue';
+import SearchBar from './components/SearchBar.vue';
+
 export default {
 
   name: 'app',
 
 
   components: {
-     PortfolioView
+     PortfolioView,
+     SearchBar
   }
 
 }

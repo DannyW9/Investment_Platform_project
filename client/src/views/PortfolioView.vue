@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import List from './components/List.vue';
+import List from '@/components/List.vue';
 export default {
   name: portfolioView,
   data(){

@@ -1,22 +1,22 @@
 <template lang="html">
- <h1>Hello</h1>
+ <div>
+   <h1>Hello</h1>
+   <PortfolioView />
+ </div>
 </template>
 
 <script>
+import PortfolioView from '@/views/PortfolioView.vue';
 export default {
 
   name: 'app',
-  
+
 
   components: {
-  chart,
-  portfolioValue,
-  List,
-  ListItem,
-  SearchBar
+     portfolioView
   }
 
-},
+}
 
 </script>
 

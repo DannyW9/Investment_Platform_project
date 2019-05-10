@@ -5,20 +5,20 @@
 <script>
 export default {
   name: "stockView",
-  // props: ["stock"],
+  props: ["stock"],
   data(){
     return {
-      //selectedStock: this.stock,
+      selectedStock: this.stock,
       stockInfo: {}
     }
   },
   mounted(){
-    //if(!this.stock) this.$router.push('/stocks');
+    if(!this.stock) this.$router.push('/stocks');
 
-    if(this.selectedStock) fetch('https://api.iextrading.com/1.0/stock/msft/batch?types=quote,news,chart&range=3m&last=10')
+    fetch(`https://api.iextrading.com/1.0/stock/${this.selectedStock[symbol]}/batch?types=quote,news,chart&range=3m&last=10`)
     .then(response => response.json())
     .then((details) => {
-      this.stockInfo = details;
+      this.stockInfo = details[quote];
     })
   }
 }

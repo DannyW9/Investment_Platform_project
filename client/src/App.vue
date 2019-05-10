@@ -4,7 +4,6 @@
 
  <div id='app'>
     <NavBar/>
-   <h1>Hello</h1>
    <h1>Investment Hub</h1>
    <SearchBar/>
 

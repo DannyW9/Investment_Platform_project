@@ -2,7 +2,7 @@
   <div class="">
     <input type="text" v-model='searchValue' placeholder="Search by company name" v-on:input='displaySearchData'>
     <ul>
-      <li v-for="stock in objectsFound">{stock.companyName}</li>
+      <li v-for="stock in stockFound">{{stock.name}}</li>
     </ul>
   </div>
 </template>
@@ -15,26 +15,36 @@ export default {
 
   data(){
     return{
-      objectsFound: [],
+      stockFound: [],
       searchValue: '',
-      listOfCompanies: []
+      listOfCompanies: [],
+      stockToDisplay: {}
     }
   },
 
   methods:{
     displaySearchData(){
-      fetch(`https://api.iextrading.com/1.0/stock/${this.searchValue}/batch?types=quote,news,chart&range=3m&last=10`)
-      .then(res => res.json())
-      .then(data => this.listOfCompanies = data)
-
-      const found = this.listOfCompanies.filter((stock) => {
-        return stock.companyName.includes(this.searchValue)
+      let found = this.listOfCompanies.filter((stock) => {
+        return stock.name.includes(this.searchValue)
+        console.log(found);
       })
-      this.objectsFound = found;
-      // event bus for displaying in stocks component
+      this.stockFound = found;
+
+      fetch(`https://api.iextrading.com/1.0/stock/${this.stockFound.symbol}/batch?types=quote`)
+      .then(res => res.json())
+      .then(data => this.stockToDisplay = data);
+    }
+  },
+  mounted(){
+    fetch('https://api.iextrading.com/1.0/ref-data/symbols')
+    .then(res => res.json())
+    .then(data => this.listOfCompanies = data);
+
+    if (this.stockFound.count() === 1 ){
+      this.stockToDisplay = this.stockFound
+    }
     }
 
-  }
 }
 </script>
 

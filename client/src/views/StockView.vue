@@ -9,13 +9,13 @@
 
 <script>
 import Chart from 'chart.js';
-import chartTest from '@/services/ChartService.js'
+import ChartService from '@/services/ChartService.js'
 export default {
   name: "stockView",
   props: ["stock"],
   data(){
     return {
-      planetChartData: chartTest,
+      // planetChartData: chartTest,
       selectedStock: this.stock,
       stockInfo: {},
       stockData: [],
@@ -25,14 +25,15 @@ export default {
   },
 
   methods: {
-    createChart(chartId, chartData) {
-      const ctx = chartId;
-      const myChart = new Chart(ctx, {
-        type: chartData.type,
-        data: chartData.data,
-        options: chartData.options
-      })
-    },
+    // createChart(chartId, chartData) {
+    //   const ctx = chartId;
+    //   const myChart = new Chart(ctx, {
+    //     type: chartData.type,
+    //     data: chartData.data,
+    //     options: chartData.options
+    //   })
+    // createChart(){
+
 
     getCloseValues(){
       for (let data of this.stockData){
@@ -57,9 +58,10 @@ export default {
       this.stockData = details.chart;
       this.getCloseValues();
       this.getLabels();
+      // this.createChart();
+      ChartService.createChart("planet-chart", this.closeValues, this.labels);
     });
-
-    this.createChart('planet-chart', this.planetChartData);
+    // this.createChart('planet-chart', this.planetChartData);
 
   }
 }

@@ -3,6 +3,7 @@
     <canvas id="planet-chart"></canvas>
     <h1>{{stockInfo.companyName}} - ({{stockInfo.symbol}})</h1>
     <h2>Sector: {{stockInfo.sector}}</h2>
+    <p>{{stockData[0]}}</p>
   </div>
 </template>
 
@@ -16,7 +17,10 @@ export default {
     return {
       planetChartData: chartTest,
       selectedStock: this.stock,
-      stockInfo: {}
+      stockInfo: {},
+      stockData: [],
+      closeValues: [],
+      labels: []
     }
   },
 
@@ -27,7 +31,19 @@ export default {
         type: chartData.type,
         data: chartData.data,
         options: chartData.options
-      });
+      })
+    },
+
+    getCloseValues(){
+      for (let data of this.stockData){
+        this.closeValues.push(data.close);
+      }
+    },
+
+    getLabels(){
+      for(let data of this.stockData){
+        this.labels.push(data.label);
+      }
     }
   },
 
@@ -38,9 +54,13 @@ export default {
     .then(response => response.json())
     .then((details) => {
       this.stockInfo = details.quote;
+      this.stockData = details.chart;
+      this.getCloseValues();
+      this.getLabels();
     });
 
     this.createChart('planet-chart', this.planetChartData);
+
   }
 }
 </script>

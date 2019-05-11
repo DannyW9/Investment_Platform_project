@@ -14,6 +14,18 @@ export default {
     }
   },
 
+  methods:{
+    calculateInvestmentValue(){
+      this.portfolio.forEach((stock) => {
+        if(stock.symbol === this.quotes.forEach((quote) => {
+          quote.symbol
+        })){
+          stock.numberOfShares * quote.latestPrice
+        }
+      })
+    }
+  },
+
 
 
   mounted(){

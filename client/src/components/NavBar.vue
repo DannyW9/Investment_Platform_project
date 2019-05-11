@@ -1,9 +1,9 @@
 <template lang="html">
-<nav id="nav-bar" name="NavBar">
-  <router-link :to="{ name: 'portfolio'}">My Portfolio</router-link>
+<div id="nav-bar" class="NavBar">
+  <router-link :to="{ name: 'portfolio'}" class="a">My Portfolio</router-link>
   <br>
-  <router-link :to="{ name: 'stockView'}">Buy Stocks</router-link>
-</nav>
+  <router-link :to="{ name: 'stockView'}" a class="a">Buy Stocks</router-link>
+</div>
 </template>
 
 <script>
@@ -12,4 +12,32 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+.NavBar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+.NavBar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.NavBar a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.NavBar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
 </style>

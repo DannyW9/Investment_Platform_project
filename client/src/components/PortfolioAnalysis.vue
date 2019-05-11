@@ -22,7 +22,9 @@ export default {
     .then(res => res.json())
   })
     Promise.all(promises)
-    .then(data => this.quotes = data)
+    .then(data => data.forEach((stock) => {
+      this.quotes.push(stock['quote'])
+    }))
   }
 }
 </script>

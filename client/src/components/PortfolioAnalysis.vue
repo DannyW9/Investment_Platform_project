@@ -20,15 +20,14 @@ export default {
         if(stock.symbol === this.quotes.forEach((quote) => {
           quote.symbol
         })){
-          stock.numberOfShares * quote.latestPrice
+          return stock.numberOfShares * quote.latestPrice
         }
       })
     }
   },
 
-
-
   mounted(){
+
     const promises = this.portfolio.map((stock) => {
     return fetch(`https://api.iextrading.com/1.0/stock/${stock.symbol}/batch?types=quote`)
     .then(res => res.json())

@@ -1,7 +1,7 @@
 <template lang="html">
 <div class="">
 <ul>
-  <listItem v-for="stock in Portfolio" :stock ='stock'/>
+  <listItem v-for="stock in portfolio" :stock ='stock'/>
 </ul>
 </div>
 </template>
@@ -13,7 +13,7 @@ export default {
   components: {
     ListItem
   },
-  props: ['Portfolio']
+  props: ['portfolio']
 }
 </script>
 

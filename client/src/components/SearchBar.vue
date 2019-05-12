@@ -29,7 +29,7 @@ export default {
   methods:{
     displaySearchData(){
       let found = this.listOfCompanies.filter((stock) => {
-        return stock.name.includes(this.searchValue)
+        return stock.name.toLowerCase().includes(this.searchValue.toLowerCase())
         console.log(found);
       })
       this.stockFound = found;

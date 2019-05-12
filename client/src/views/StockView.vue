@@ -1,9 +1,20 @@
 <template lang="html">
-  <div class="">
-    <canvas id="planet-chart"></canvas>
-    <h1>{{stockInfo.companyName}} - ({{stockInfo.symbol}})</h1>
-    <h2>Sector: {{stockInfo.sector}}</h2>
-    <p>{{stockData[0]}}</p>
+  <div class="stock-info">
+
+    <h1>{{stockInfo.companyName}}</h1>
+    <h2>{{stockInfo.symbol}}</h2>
+    <p>Primary Exchange: {{stockInfo.primaryExchange}}</p>
+    <canvas id="stock-price-chart"></canvas>
+
+    <div id="stock-data">
+      <div id="left-div">
+        <h1>Hello Left</h1>
+      </div>
+      <div id="right-div">
+        <h1>Hello Right</h1>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -25,16 +36,6 @@ export default {
   },
 
   methods: {
-    // createChart(chartId, chartData) {
-    //   const ctx = chartId;
-    //   const myChart = new Chart(ctx, {
-    //     type: chartData.type,
-    //     data: chartData.data,
-    //     options: chartData.options
-    //   })
-    // createChart(){
-
-
     getCloseValues(){
       for (let data of this.stockData){
         this.closeValues.push(data.close);
@@ -51,21 +52,36 @@ export default {
   mounted(){
     if(!this.stock) this.$router.push('/stocks');
 
-    if (this.selectedStock) fetch(`https://api.iextrading.com/1.0/stock/${this.selectedStock.symbol}/batch?types=quote,news,chart&range=3m&last=10`)
+    if (this.selectedStock) fetch(`https://api.iextrading.com/1.0/stock/${this.selectedStock.symbol}/batch?types=quote,news,chart&range=1m&last=10`)
     .then(response => response.json())
     .then((details) => {
       this.stockInfo = details.quote;
       this.stockData = details.chart;
       this.getCloseValues();
       this.getLabels();
-      // this.createChart();
-      ChartService.createChart("planet-chart", this.closeValues, this.labels);
+      ChartService.createChart("stock-price-chart", this.closeValues, this.labels);
     });
-    // this.createChart('planet-chart', this.planetChartData);
 
   }
 }
 </script>
 
 <style lang="css" scoped>
+
+.stock-info {
+  text-align: center;
+}
+
+canvas {
+  width: 50%;
+  margin: auto;
+}
+
+#stock-data {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 </style>

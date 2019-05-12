@@ -11,6 +11,7 @@
 <script>
 import StockService from '@/services/StockService.js'
 import SearchItem from './SearchItem.vue'
+import {eventBus} from '../main.js'
 
 export default {
   name: 'SearchBar',
@@ -40,6 +41,8 @@ export default {
     fetch('https://api.iextrading.com/1.0/ref-data/symbols')
     .then(res => res.json())
     .then(data => this.listOfCompanies = data);
+
+    eventBus.$on('reset-search', this.searchValue = '')
   }
 }
 

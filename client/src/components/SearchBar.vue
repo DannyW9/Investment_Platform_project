@@ -42,7 +42,9 @@ export default {
     .then(res => res.json())
     .then(data => this.listOfCompanies = data);
 
-    eventBus.$on('reset-search', this.searchValue = '')
+    eventBus.$on('reset-search', (stock) => {
+      this.searchValue = ''
+    })
   }
 }
 

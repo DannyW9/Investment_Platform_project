@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="">
-    <router-link :to="{ name: 'stockview', params: {stock} }" v-on:click='reset'>
-    <li>{{stock.name}}</li>
+    <router-link :to="{ name: 'stockview', params: {stock} }" >
+    <li @click='reset' >{{stock.name}}</li>
     </router-link>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
 
   methods:{
     reset(){
-      eventBus.$emit('reset-search')
+      eventBus.$emit('reset-search', this.stock)
     }
   }
 }

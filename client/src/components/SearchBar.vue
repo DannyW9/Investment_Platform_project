@@ -2,7 +2,7 @@
   <div class="">
     <input type="text" v-model='searchValue' placeholder="Search for Company" v-on:input='displaySearchData'>
     <ul>
-      <searchItem v-for="stock in stockFound" :stock ='stock'/>
+      <searchItem v-for="stock in stockFound" :stock ='stock' v-if='searchValue'/>
     </ul>
 
   </div>
@@ -28,7 +28,7 @@ export default {
 
   methods:{
     displaySearchData(){
-      let found = this.listOfCompanies.filter((stock) => {
+      const found = this.listOfCompanies.filter((stock) => {
         return stock.name.toLowerCase().includes(this.searchValue.toLowerCase())
         console.log(found);
       })

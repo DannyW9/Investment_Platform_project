@@ -1,8 +1,8 @@
 <template lang="html">
 <div id="nav-bar" class="NavBar">
-  <router-link :to="{ name: 'portfolio'}" class="a">My Portfolio</router-link>
+  <router-link :to="{ name: 'stocks'}" class="a">My Portfolio</router-link>
   <br>
-  <router-link :to="{ name: 'stockView'}" a class="a">Buy Stocks</router-link>
+  <router-link :to="{ name: 'stock'}" class="a">Buy Stocks</router-link>
 </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
 .NavBar {
     margin: 0;
     padding: 0;
-    width: 200px;
+    width: 20%;
     background-color: #f1f1f1;
     position: fixed;
     height: 100%;

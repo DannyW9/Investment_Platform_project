@@ -1,7 +1,6 @@
 <template lang="html">
   <div class="stock-info">
 
-<p>{{this.selectedStock}}</p>
     <h1>{{stockInfo.companyName}} ({{stockInfo.symbol}})</h1>
     <h2>{{stockInfo.latestPrice}}</h2>
     <h3 :class="stockInfo.change < 0 ? 'red' : 'green'">{{stockInfo.change}} ({{stockInfo.changePercent}})</h3>
@@ -126,10 +125,10 @@ export default {
         symbol: this.stockInfo.symbol,
         companyName: this.stockInfo.companyName,
         numberOfShares: this.quantity + this.numberOfShares,
-        AVGPrice: ((this.numberOfShares * this.AVGPrice) + (this.quantity * this.stockInfo.latestPrice) / (this.numberOfShares + this.quantity))
+        AVGPrice: ((this.numberOfShares * this.AVGPrice) + ((parseInt(this.quantity, 10)) * this.latestPrice)) / (this.numberOfShares + parseInt(this.quantity, 10))
       }
       StockService.putStock(purchase, this.id)
-      .then(res => res.json())
+      .then(data => console.log('stuff we got back', data))
     },
 
     purchaseStock(e){
@@ -140,6 +139,8 @@ export default {
         numberOfShares: parseInt(this.quantity, 10),
         AVGPrice: this.latestPrice
       }
+      StockService.deleteStock(this.id)
+      console.log(this.id);
       StockService.postStock(purchase)
       .then(data => console.log('stuff we got back', data))
     }

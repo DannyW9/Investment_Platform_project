@@ -66,8 +66,14 @@ export default {
         }, {value:0, sector: element.sector})
         this.newArray.push(reducedObj)
         this.unique = _.uniqBy(this.newArray, 'sector')
-      })}),
+      })})
 
+      .then(() => {
+
+      this.unique.forEach((pair) => {
+        this.sectors.push(pair.sector)
+        this.valueOfInvestment.push(pair.value)
+      })})
 
 
     ChartService.DivChart("diversification", this.valueOfInvestment, this.sectors);

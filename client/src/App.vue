@@ -12,6 +12,7 @@
 <script>
 import PortfolioView from './views/PortfolioView.vue';
 import SearchBar from './components/SearchBar.vue';
+import NavBar from './components/NavBar.vue'
 
 export default {
 
@@ -20,7 +21,8 @@ export default {
 
   components: {
      PortfolioView,
-     SearchBar
+     SearchBar,
+     NavBar
   }
 
 }

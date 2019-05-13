@@ -1,5 +1,8 @@
 <template lang="html">
  <div id='app'>
+
+    <NavBar/>
+
    <h1>Investment Hub</h1>
    <SearchBar/>
    <router-view id='view'/>

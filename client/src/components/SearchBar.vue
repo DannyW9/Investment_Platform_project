@@ -1,41 +1,54 @@
 <template lang="html">
   <div class="">
-    <input type="text" v-model='searchValue' placeholder="Search by company name" v-on:input='displaySearchData'>
+    <input type="text" v-model='searchValue' placeholder="Search for Company" v-on:input='displaySearchData'>
     <ul>
-      <li v-for="stock in objectsFound">{stock.companyName}</li>
+      <searchItem v-for="stock in stockFound" :stock ='stock' v-if='searchValue'/>
     </ul>
+
   </div>
 </template>
 
 <script>
 import StockService from '@/services/StockService.js'
+import SearchItem from './SearchItem.vue'
+import {eventBus} from '../main.js'
 
 export default {
   name: 'SearchBar',
 
   data(){
     return{
-      objectsFound: [],
+      stockFound: [],
       searchValue: '',
-      listOfCompanies: []
+      listOfCompanies: [],
     }
+  },
+  components:{
+    SearchItem
   },
 
   methods:{
     displaySearchData(){
-      fetch(`https://api.iextrading.com/1.0/stock/${this.searchValue}/batch?types=quote,news,chart&range=3m&last=10`)
-      .then(res => res.json())
-      .then(data => this.listOfCompanies = data)
-
       const found = this.listOfCompanies.filter((stock) => {
-        return stock.companyName.includes(this.searchValue)
+        return stock.name.toLowerCase().includes(this.searchValue.toLowerCase())
+        console.log(found);
       })
-      this.objectsFound = found;
-      // event bus for displaying in stocks component
+      this.stockFound = found;
     }
 
+  },
+  mounted(){
+    fetch('https://api.iextrading.com/1.0/ref-data/symbols')
+    .then(res => res.json())
+    .then(data => this.listOfCompanies = data);
+
+    eventBus.$on('reset-search', (stock) => {
+      this.searchValue = ''
+    })
   }
 }
+
+
 </script>
 
 <style lang="css" scoped>

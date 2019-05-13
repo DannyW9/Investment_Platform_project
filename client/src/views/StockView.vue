@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="">
+  <div class="margin">
   <h1>{{stockInfo.companyName}} - ({{stockInfo.symbol}})</h1>
   <h2>Sector: {{stockInfo.sector}}</h2>
     </div>
@@ -28,4 +28,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+.margin {
+     padding-top: 5%;
+     padding-left: 25%;
+}
+
 </style>

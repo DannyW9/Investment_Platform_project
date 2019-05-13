@@ -1,5 +1,5 @@
 <template lang="html">
- <div id='app'>
+ <div id='app' class="app">
 
     <NavBar/>
 
@@ -33,6 +33,17 @@ export default {
 
 .h {
      padding-left: 25%;
-}
+     text-align: center;
+     font-family: 'Bookman';
+     color: gold;
+   }
+
+/* .app {
+  background-image: url("./img/greenstk.jpeg");
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+  font-family: "Lucida Sans Unicode"
+} */
 
 </style>

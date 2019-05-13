@@ -1,8 +1,14 @@
 <template lang="html">
-<nav id="nav-bar" name="NavBar">
-  <router-link :to="{ name: 'stocks'}">My Portfolio</router-link>
+<nav id="nav-bar" class="NavBar">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  <router-link :to="{ name: 'stocks'}"><h3 class="h">My Portfolio</h3></router-link>
   <br>
-  <router-link :to="{ name: 'stockview'}">Buy Stocks</router-link>
+  <router-link :to="{ name: 'stockview'}"><h3 class="h">Buy Stocks</h3></router-link>
 </nav>
 </template>
 
@@ -39,5 +45,12 @@ export default {
     background-color: #555;
     color: white;
 }
+
+.h {
+     /* font-size: 340%; */
+     text-align: center;
+     font-family: 'Orbitron', sans-serif;
+     color: #ff6a00;
+   }
 
 </style>

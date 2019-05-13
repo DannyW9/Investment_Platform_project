@@ -35,7 +35,8 @@ export default {
 <style lang="css" scoped>
 
 .margin {
-     padding-left: 20%;
+     padding-top: 5%;
+     padding-left: 25%;
 }
 
 </style>

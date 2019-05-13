@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="">
+
     <router-link :to="{ name: 'stockview', params: {stock} }" >
     <li @click='reset' >{{stock.name}}</li>
     </router-link>
@@ -7,6 +8,8 @@
 </template>
 
 <script>
+export default {
+
 import {eventBus} from '../main.js';
 
 export default {
@@ -18,6 +21,7 @@ export default {
       eventBus.$emit('reset-search', this.stock)
     }
   }
+
 }
 </script>
 

@@ -1,12 +1,15 @@
 <template lang="html">
-   <div>
+   <div v-if="portfolio.length > 1">
+     <h1>Your Investments</h1>
     <List :portfolio= 'portfolio'/>
+    <portfolioAnalysis :portfolio='portfolio'/>
    </div>
 </template>
 
 <script>
 import List from '../components/List.vue';
 import ListItem from '../components/ListItem.vue';
+import PortfolioAnalysis from '../components/PortfolioAnalysis.vue'
 import StockService from '@/services/StockService.js';
 
 export default {
@@ -18,7 +21,8 @@ export default {
   },
     components: {
     List,
-    ListItem
+    ListItem,
+    PortfolioAnalysis
   },
   mounted(){
     StockService.getStocks()

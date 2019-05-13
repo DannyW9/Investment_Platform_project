@@ -3,7 +3,7 @@
 
     <NavBar/>
 
-   <h1>Investment Hub</h1>
+   <h1 class="h">Investment Hub</h1>
    <SearchBar/>
    <router-view id='view'/>
  </div>
@@ -30,4 +30,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+.h {
+     padding-left: 25%;
+}
+
 </style>

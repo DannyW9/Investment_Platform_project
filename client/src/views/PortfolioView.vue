@@ -1,5 +1,5 @@
 <template lang="html">
-   <div v-if="portfolio.length > 1">
+   <div class ="margin" v-if="portfolio.length > 1">
      <h1>Your Investments</h1>
     <List :portfolio= 'portfolio'/>
     <portfolioAnalysis :portfolio='portfolio'/>
@@ -33,4 +33,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+.margin {
+     padding-left: 20%;
+}
+
 </style>

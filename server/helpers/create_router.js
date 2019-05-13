@@ -35,21 +35,6 @@ const createRouter = function(collection) {
     });
   });
 
-  // Create New Entry
-  router.post('/', (req, res) => {
-    const newStock = req.body;
-    collection
-    .insertOne(newStock)
-    .then((result) => {
-      res.json(result.ops[0])
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.json({ status: 500, error: err });
-    });
-  });
-
   // Delete Entry
   router.delete('/:id', (req, res) => {
     const id = req.params.id;
@@ -62,6 +47,22 @@ const createRouter = function(collection) {
       console.error(err);
       res.status(500);
       res.json({ status:500, error:err})
+    });
+  });
+
+  // Create New Entry
+  router.post('/', (req, res) => {
+    console.log('route being hit', req.body);
+    const newStock = req.body;
+    collection
+    .insertOne(newStock)
+    .then((result) => {
+      res.json(result.ops[0])
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.json({ status: 500, error: err });
     });
   });
 

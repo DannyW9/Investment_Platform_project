@@ -15,6 +15,7 @@ export default {
   },
 
   methods:{
+
     calculateInvestmentValue(){
       this.portfolio.forEach((stock) => {
         if(stock.symbol === this.quotes.forEach((quote) => {
@@ -27,7 +28,6 @@ export default {
   },
 
   mounted(){
-
     const promises = this.portfolio.map((stock) => {
     return fetch(`https://api.iextrading.com/1.0/stock/${stock.symbol}/batch?types=quote`)
     .then(res => res.json())

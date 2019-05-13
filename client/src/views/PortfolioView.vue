@@ -1,5 +1,5 @@
 <template lang="html">
-   <div>
+   <div v-if="portfolio.length > 1">
      <h1>Your Investments</h1>
     <List :portfolio= 'portfolio'/>
     <portfolioAnalysis :portfolio='portfolio'/>

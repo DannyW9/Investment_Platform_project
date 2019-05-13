@@ -8,8 +8,6 @@
 </template>
 
 <script>
-export default {
-
 import {eventBus} from '../main.js';
 
 export default {

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'portfolioAnalysis',
   props: ['portfolio'],
@@ -37,8 +38,10 @@ export default {
       this.quotes.push(stock['quote'])
     }))
   }
+
 }
 </script>
 
 <style lang="css" scoped>
+
 </style>

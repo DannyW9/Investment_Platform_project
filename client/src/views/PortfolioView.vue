@@ -11,6 +11,8 @@ import List from '../components/List.vue';
 import ListItem from '../components/ListItem.vue';
 import PortfolioAnalysis from '../components/PortfolioAnalysis.vue'
 import StockService from '@/services/StockService.js';
+import SearchItem from '../components/SearchItem.vue';
+
 
 export default {
   name: 'portfolioView',
@@ -22,11 +24,14 @@ export default {
     components: {
     List,
     ListItem,
-    PortfolioAnalysis
+    PortfolioAnalysis,
+    SearchItem
   },
   mounted(){
     StockService.getStocks()
       .then(portfolio => this.portfolio = portfolio)
+      eventBus.$emit('search-stock', found)
+
   }
 
 }

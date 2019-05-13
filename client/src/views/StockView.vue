@@ -1,30 +1,41 @@
 <template lang="html">
-  <div class="margin">
-  <h1>{{stockInfo.companyName}} - ({{stockInfo.symbol}})</h1>
-  <h2>Sector: {{stockInfo.sector}}</h2>
-    </div>
+  <div class="">
+  <h2>Portfolio Analysis</h2>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "stockView",
-  props: ["stock"],
+  name: 'portfolioAnalysis',
+  props: ['portfolio'],
   data(){
-    return {
-      selectedStock: this.stock,
-      stockInfo: {}
+    return{
+      quotes:[]
+    }
+  },
+  methods:{
+    calculateInvestmentValue(){
+      this.portfolio.forEach((stock) => {
+        if(stock.symbol === this.quotes.forEach((quote) => {
+          quote.symbol
+        })){
+          return stock.numberOfShares * quote.latestPrice
+        }
+      })
     }
   },
   mounted(){
-    if(!this.stock) this.$router.push('/stocks');
-
-    if (this.selectedStock) fetch(`https://api.iextrading.com/1.0/stock/${this.selectedStock.symbol}/batch?types=quote,news,chart&range=3m&last=10`)
-    .then(response => response.json())
-    .then((details) => {
-      this.stockInfo = details.quote;
-    })
+    const promises = this.portfolio.map((stock) => {
+    return fetch(`https://api.iextrading.com/1.0/stock/${stock.symbol}/batch?types=quote`)
+    .then(res => res.json())
+  })
+    Promise.all(promises)
+    .then(data => data.forEach((stock) => {
+      this.quotes.push(stock['quote'])
+    }))
   }
 }
+
 </script>
 
 <style lang="css" scoped>

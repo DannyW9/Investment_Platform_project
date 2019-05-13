@@ -1,10 +1,8 @@
 <template lang="html">
   <div class="top">
     <div class="search-container">
-    <input type="text" v-model='searchValue' placeholder="Search for Company" v-on:input='displaySearchData' class="input">
-    <ul>
-      <searchItem v-for="stock in stockFound" :stock ='stock' v-if='searchValue'/>
-    </ul>
+    <input type="text" v-model='searchValue' placeholder="Search for Company" class="input">
+    <button @click="displaySearchData" type="button" name="button">Search</button>
   </div>
    <h1 class="h">Investment Hub</h1>
   </div>
@@ -33,9 +31,10 @@ export default {
     displaySearchData(){
       const found = this.listOfCompanies.filter((stock) => {
         return stock.name.toLowerCase().includes(this.searchValue.toLowerCase())
-        console.log(found);
       })
-      this.stockFound = found;
+
+      eventBus.$emit('search-stock', found)
+
     }
 
   },

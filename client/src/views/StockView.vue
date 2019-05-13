@@ -25,7 +25,7 @@
             <p>{{stockInfo.latestVolume}}</p>
             <hr>
             <p class="heading">Market Cap</p>
-            <p>{{stockInfo.marketCap}}</p>
+            <p>${{stockInfo.marketCap}}</p>
             <hr>
           </div>
         </div>
@@ -49,7 +49,7 @@
             <p>${{stockInfo.week52Low}} - ${{stockInfo.week52High}}</p>
             <hr>
             <p class="heading">YTD Change</p>
-            <p>{{stockInfo.ytdChange}}</p>
+            <p>{{ ((stockInfo.ytdChange)*100) }}%</p>
             <hr>
           </div>
         </div>
@@ -107,6 +107,8 @@ export default {
       this.getCloseValues();
       this.getLabels();
       ChartService.createChart("stock-price-chart", this.closeValues, this.labels);
+      this.stockInfo.marketCap = this.numberChange(this.stockInfo.marketCap);
+
     });
 
   }

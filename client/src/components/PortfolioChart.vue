@@ -1,7 +1,9 @@
 <template lang="html">
   <div class="">
-  <p>${{this.totalValue}}</p>
+  <p>Total Value: ${{(this.totalValue).toFixed(2)}}</p>
+  <div class="">
   <canvas id="stock-price-chart"></canvas>
+  </div>
   </div>
 </template>
 
@@ -31,14 +33,14 @@ export default {
 
       this.quotes.map((stock) => {
         this.values.push(stock['latestPrice'])
-        console.log(this.quotes);
       })
-
+    })
+    .then(() => {
       this.totalValue = this.values.reduce((total, price) => {
-        total + price
-      })
-      })
-  }
+        return total + price
+    })
+  })
+}
 }
 </script>
 

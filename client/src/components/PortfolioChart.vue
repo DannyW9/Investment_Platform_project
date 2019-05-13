@@ -1,22 +1,20 @@
 <template lang="html">
   <div class="">
-  <h2>Portfolio Analysis</h2>
+  <p>${{this.totalValue}}</p>
+  <canvas id="stock-price-chart"></canvas>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'portfolioAnalysis',
-  props: ['portfolio'],
+  name: 'Portfolio-chart',
+  props:['portfolio'],
   data(){
     return{
-      quotes:[]
+      quotes:[],
+      values:[],
+      totalValue:0
     }
-  },
-
-  methods:{
-
-  
   },
 
   mounted(){
@@ -28,6 +26,18 @@ export default {
     .then(data => data.forEach((stock) => {
       this.quotes.push(stock['quote'])
     }))
+
+    .then(() => {
+
+      this.quotes.map((stock) => {
+        this.values.push(stock['latestPrice'])
+        console.log(this.quotes);
+      })
+
+      this.totalValue = this.values.reduce((total, price) => {
+        total + price
+      })
+      })
   }
 }
 </script>

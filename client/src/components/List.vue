@@ -1,7 +1,7 @@
 <template lang="html">
 <div class="">
 <ul>
-  <listItem v-for="stock in portfolio" :stock ='stock'/>
+  <listItem v-for="stock in portfolio" :stock ='stock' :portfolio='portfolio'/>
 </ul>
 </div>
 </template>

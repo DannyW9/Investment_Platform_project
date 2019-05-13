@@ -2,8 +2,8 @@
   <div class="stock-info">
 
     <h1>{{stockInfo.companyName}} ({{stockInfo.symbol}})</h1>
-    <h2>${{stockInfo.latestPrice}}</h2>
-    <h3>{{stockInfo.change}} ({{(stockInfo.changePercent)*100}}%)</h3>
+    <h2>{{stockInfo.latestPrice}}</h2>
+    <h3 :class="stockInfo.change < 0 ? 'red' : 'green'">{{stockInfo.change}} ({{stockInfo.changePercent}})</h3>
     <p>Primary Exchange: {{stockInfo.primaryExchange}}</p>
     <canvas id="stock-price-chart"></canvas>
 
@@ -14,10 +14,10 @@
         <div id="left-div">
           <div>
             <p class="heading">Open</p>
-            <p>${{stockInfo.open}}</p>
+            <p>{{stockInfo.open}}</p>
             <hr>
             <p class="heading">Previous Close</p>
-            <p>${{stockInfo.previousClose}}</p>
+            <p>{{stockInfo.previousClose}}</p>
             <hr>
           </div>
           <div class="inner-div">
@@ -25,7 +25,7 @@
             <p>{{stockInfo.latestVolume}}</p>
             <hr>
             <p class="heading">Market Cap</p>
-            <p>${{stockInfo.marketCap}}</p>
+            <p>{{stockInfo.marketCap}}</p>
             <hr>
           </div>
         </div>
@@ -46,10 +46,10 @@
           </div>
           <div class="inner-div">
             <p class="heading">52 Week Range</p>
-            <p>${{stockInfo.week52Low}} - ${{stockInfo.week52High}}</p>
+            <p>{{stockInfo.week52Low}} - {{stockInfo.week52High}}</p>
             <hr>
             <p class="heading">YTD Change</p>
-            <p>{{ ((stockInfo.ytdChange)*100) }}%</p>
+            <p>{{ (stockInfo.ytdChange) }}</p>
             <hr>
           </div>
         </div>
@@ -64,6 +64,7 @@
 
 <script>
 import Chart from 'chart.js';
+import numeral from 'numeral-es6';
 import ChartService from '@/services/ChartService.js'
 export default {
   name: "stockView",
@@ -93,7 +94,17 @@ export default {
 
     numberChange(x){
       return x.toLocaleString('en');
+    },
+
+    currency(x){
+      return numeral(x).format('$0.00a');
+    },
+
+    percentage(x){
+      return numeral(x).format('0.00%');
     }
+
+
   },
 
   mounted(){
@@ -107,8 +118,16 @@ export default {
       this.getCloseValues();
       this.getLabels();
       ChartService.createChart("stock-price-chart", this.closeValues, this.labels);
-      this.stockInfo.marketCap = this.numberChange(this.stockInfo.marketCap);
-
+      this.stockInfo.marketCap = this.currency(this.stockInfo.marketCap);
+      this.stockInfo.week52High = this.currency(this.stockInfo.week52High);
+      this.stockInfo.week52Low = this.currency(this.stockInfo.week52Low);
+      this.stockInfo.latestPrice = this.currency(this.stockInfo.latestPrice);
+      this.stockInfo.open = this.currency(this.stockInfo.open);
+      this.stockInfo.previousClose = this.currency(this.stockInfo.previousClose);
+      this.stockInfo.latestVolume = this.numberChange(this.stockInfo.latestVolume);
+      this.stockInfo.avgTotalVolume = this.numberChange(this.stockInfo.avgTotalVolume);
+      this.stockInfo.changePercent = this.percentage(this.stockInfo.changePercent);
+      this.stockInfo.ytdChange = this.percentage(this.stockInfo.ytdChange);
     });
 
   }
@@ -156,6 +175,14 @@ canvas {
   width: 100%;
   flex-direction: row;
   justify-content: center;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
 }
 
 </style>

@@ -12,11 +12,7 @@
 <script>
 import PortfolioView from './views/PortfolioView.vue';
 import SearchBar from './components/SearchBar.vue';
-<<<<<<< HEAD
 import NavBar from './components/NavBar.vue';
-=======
-import NavBar from './components/NavBar.vue'
->>>>>>> develop
 
 export default {
 

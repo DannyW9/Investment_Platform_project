@@ -1,31 +1,34 @@
 <template lang="html">
   <div class="">
   <h2>Portfolio Analysis</h2>
+  <div class="doughnut">
+  <canvas id="diversification"></canvas>
+  </div>
   </div>
 </template>
 
 <script>
+var Lodash = require('lodash');
+  import ChartService from '../services/ChartService.js'
 
 export default {
   name: 'portfolioAnalysis',
   props: ['portfolio'],
   data(){
     return{
-      quotes:[]
+      quotes:[],
+      sectors:[],
+      valueOfInvestment:[],
+      obj:{},
+      newArray: [],
+      array:[],
+      unique:[]
     }
   },
 
   methods:{
 
-    calculateInvestmentValue(){
-      this.portfolio.forEach((stock) => {
-        if(stock.symbol === this.quotes.forEach((quote) => {
-          quote.symbol
-        })){
-          return stock.numberOfShares * quote.latestPrice
-        }
-      })
-    }
+
   },
 
   mounted(){
@@ -34,14 +37,52 @@ export default {
     .then(res => res.json())
   })
     Promise.all(promises)
-    .then(data => data.forEach((stock) => {
+    .then((data) => {
+      const stocks = data;
+      stocks.forEach((stock) => {
       this.quotes.push(stock['quote'])
-    }))
+    })})
+      .then(() => {
+
+      this.portfolio.forEach((stock) => {
+        this.quotes.forEach((quote) => {
+          if(stock.symbol === quote.symbol){
+            this.obj = new Object()
+            this.obj.sector = quote.sector
+            this.obj.value = (stock.numberOfShares * quote.latestPrice)
+            this.array.push(this.obj)
+          }
+
+        })
+      })})
+
+      .then(() => {
+      this.array.forEach(element => {
+        const reducedObj = this.array.filter(pair => pair.sector === element.sector)
+
+        .reduce((result, el) => {
+          result.value += el.value
+          return result
+        }, {value:0, sector: element.sector})
+        this.newArray.push(reducedObj)
+        this.unique = _.uniqBy(this.newArray, 'sector')
+      })}),
+
+
+
+    ChartService.DivChart("diversification", this.valueOfInvestment, this.sectors);
   }
 
 }
 </script>
 
 <style lang="css" scoped>
+.doughnut{
+  border: solid;
+  padding-left: 5px;
+  padding-bottom: 0px;
+  width: 70%;
+  height: 80%;
+}
 
 </style>

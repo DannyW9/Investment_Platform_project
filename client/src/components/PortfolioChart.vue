@@ -34,7 +34,6 @@ export default {
     .then(data => data.forEach((stock) => {
       this.quotes.push(stock['quote'])
       this.charts.push(stock['chart'])
-      console.log(this.charts)
     }))
 
     .then(() => {

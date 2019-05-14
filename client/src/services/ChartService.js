@@ -56,7 +56,7 @@ export default {
         }
       }
     })
-  }
+  },
 
   DivChart(name, data, labels){
     const diversification = name;

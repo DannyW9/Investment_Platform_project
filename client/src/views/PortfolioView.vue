@@ -1,9 +1,9 @@
 <template lang="html">
 
-  
+
    <div>
      <h1>Portfolio</h1>
-     <portfolioChart :portfolio='portfolio'/>
+     <portfolioChart :portfolio='portfolio' v-if="portfolio.length > 1"/>
      <h2>Your Investments</h2>
 
    <div class ="margin" v-if="portfolio.length > 1">
@@ -12,6 +12,7 @@
     <List :portfolio= 'portfolio'/>
     <portfolioAnalysis :portfolio='portfolio'/>
    </div>
+ </div>
 </template>
 
 <script>

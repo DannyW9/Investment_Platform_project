@@ -1,7 +1,6 @@
 <template lang="html">
   <div class="stock-info">
 
-<p>{{this.selectedStock}}</p>
     <h1>{{stockInfo.companyName}} ({{stockInfo.symbol}})</h1>
     <h2>{{stockInfo.latestPrice}}</h2>
     <h3 :class="stockInfo.change < 0 ? 'red' : 'green'">{{stockInfo.change}} ({{stockInfo.changePercent}})</h3>
@@ -9,7 +8,13 @@
     <canvas id="stock-price-chart"></canvas>
 
     <div class="purchase-form">
-      <form class="purchase" v-on:submit="purchaseStock" method="post">
+      <form v-if="this.numberOfShares > 0" class="purchase" v-on:submit="updateStock" method="put">
+        <label for="quantity"></label>
+        <input type="number" id="quantity" v-model="quantity" placeholder="Enter quantity:" required>
+        <input type="submit" id="purchase" value="Purchase More Shares">
+      </form>
+
+      <form v-else class="purchase" v-on:submit="purchaseStock" method="post">
         <label for="quantity"></label>
         <input type="number" id="quantity" v-model="quantity" placeholder="Enter quantity:" required>
         <input type="submit" id="purchase" value="Purchase Shares">
@@ -76,6 +81,7 @@ import Chart from 'chart.js';
 import numeral from 'numeral-es6';
 import ChartService from '@/services/ChartService.js';
 import StockService from '@/services/StockService.js';
+import { eventBus } from '@/main.js';
 export default {
   name: "stockView",
   props: ["stock"],
@@ -125,11 +131,12 @@ export default {
       const purchase = {
         symbol: this.stockInfo.symbol,
         companyName: this.stockInfo.companyName,
-        numberOfShares: this.quantity + this.numberOfShares,
-        AVGPrice: ((this.numberOfShares * this.AVGPrice) + (this.quantity * this.stockInfo.latestPrice) / (this.numberOfShares + this.quantity))
+        numberOfShares: parseInt(this.quantity, 10) + this.numberOfShares,
+        AVGPrice: ((this.numberOfShares * this.AVGPrice) + ((parseInt(this.quantity, 10)) * this.latestPrice)) / (this.numberOfShares + parseInt(this.quantity, 10))
       }
       StockService.putStock(purchase, this.id)
-      .then(res => res.json())
+      .then(data => eventBus.$emit('refresh-data'))
+      .then(this.$router.push('/stocks'))
     },
 
     purchaseStock(e){
@@ -141,7 +148,8 @@ export default {
         AVGPrice: this.latestPrice
       }
       StockService.postStock(purchase)
-      .then(data => console.log('stuff we got back', data))
+      .then(data => eventBus.$emit('refresh-data'))
+      .then(this.$router.push('/stocks'))
     }
 
 
@@ -187,6 +195,7 @@ export default {
 
 
   }
+
 }
 </script>
 
@@ -218,6 +227,8 @@ export default {
 }
 
 .stock-info {
+  padding-top: 5%;
+  padding-left: 15%;
   text-align: center;
 }
 

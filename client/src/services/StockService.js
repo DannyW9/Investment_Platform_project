@@ -29,10 +29,11 @@ export default {
   },
 
   putStock(payload, id){
+    console.log('in putStock', payload, baseURL+id);
     return fetch(baseURL + id, {
       method: 'PUT',
       body: JSON.stringify(payload),
-      headers: { 'Content Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' }
     })
     .then(res => res.json())
   }

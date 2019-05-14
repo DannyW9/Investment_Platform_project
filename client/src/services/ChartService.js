@@ -29,6 +29,7 @@ export default {
 
 
 
+
   portfolioChart(name, data, labels){
     const ctx = name;
     var myChart = new Chart(ctx, {
@@ -56,4 +57,28 @@ export default {
       }
     })
   }
+
+  DivChart(name, data, labels){
+    const diversification = name;
+    var divChart = new Chart(diversification, {
+      type: 'doughnut',
+      data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "sector",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: data,
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Diversification by Sector'
+      }
+    }
+})}
+
+
   }

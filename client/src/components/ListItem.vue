@@ -3,7 +3,8 @@
   <router-link :to="{ name: 'stockview', params: {stock} }">
 <li>
   <p>{{ stock.companyName }}</p>
-  <p>{{ stock.numberOfShares}}</p>
+  <p>No. of Shares: {{stock.numberOfShares}}</p>
+  <p>Value: ${{ (stock.numberOfShares * this.latestPrice).toFixed(2)}}</p>
 </li>
 </router-link>
 </div>
@@ -12,9 +13,26 @@
 <script>
 export default {
   name: 'ListItem',
-  props: ['stock']
+  props: ['stock', 'portfolio'],
+  data(){
+    return{
+      latestPrice: 0
+    }
+  },
+
+methods:{
+},
+
+mounted(){
+  fetch(`https://api.iextrading.com/1.0/stock/${this.stock.symbol}/batch?types=quote`)
+  .then(res => res.json())
+  .then(data => this.latestPrice = data.quote.latestPrice)
+}
+
+
 }
 </script>
 
 <style lang="css" scoped>
+
 </style>

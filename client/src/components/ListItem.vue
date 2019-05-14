@@ -1,7 +1,7 @@
 <template lang="html">
-<div class="">
+<div class="item">
   <router-link :to="{ name: 'stockview', params: {stock} }">
-<li>
+<li id ='item'>
   <p>{{ stock.companyName }}</p>
   <p>No. of Shares: {{stock.numberOfShares}}</p>
   <p>Value: ${{ (stock.numberOfShares * this.latestPrice).toFixed(2)}}</p>
@@ -35,4 +35,8 @@ mounted(){
 
 <style lang="css" scoped>
 
+.item{
+  border: solid;
+  text-decoration: none;
+}
 </style>

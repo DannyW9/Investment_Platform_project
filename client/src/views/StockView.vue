@@ -19,7 +19,9 @@
       </form>
     </div>
 
-    <form class="sell" v-on:submit="sellStock" method="post">
+    <p v-if="this.numberOfShares">You currently own {{this.numberOfShares}} shares in {{this.stockInfo.companyName}}</p>
+
+    <form v-if="this.numberOfShares" class="sell" v-on:submit="sellStock" method="post">
       <input type="number" class="quantity" v-model="sellAmount" placeholder="Enter quantity:" min="1" :max="this.numberOfShares" required>
       <input type="submit" class="sellButton" value="Sell Shares">
     </form>

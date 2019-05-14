@@ -9,17 +9,20 @@
 
     <div class="purchase-form">
       <form v-if="this.numberOfShares > 0" class="purchase" v-on:submit="updateStock" method="put">
-        <label for="quantity"></label>
-        <input type="number" id="quantity" v-model="quantity" placeholder="Enter quantity:" required>
-        <input type="submit" id="purchase" value="Purchase More Shares">
+        <input type="number" class="quantity" v-model="quantity" placeholder="Enter quantity:" min="1" required>
+        <input type="submit" class="purchase" value="Purchase More Shares">
       </form>
 
       <form v-else class="purchase" v-on:submit="purchaseStock" method="post">
-        <label for="quantity"></label>
-        <input type="number" id="quantity" v-model="quantity" placeholder="Enter quantity:" required>
-        <input type="submit" id="purchase" value="Purchase Shares">
+        <input type="number" class="quantity" v-model="quantity" placeholder="Enter quantity:" min="1" required>
+        <input type="submit" class="purchase" value="Purchase Shares">
       </form>
     </div>
+
+    <form class="sell" v-on:submit="sellStock" method="post">
+      <input type="number" class="quantity" v-model="sellAmount" placeholder="Enter quantity:" min="1" :max="this.numberOfShares" required>
+      <input type="submit" class="sell" value="Sell Shares">
+    </form>
 
     <div id="stock-data">
 
@@ -91,11 +94,11 @@ export default {
       stockInfo: {},
       stockData: [],
       volume: [],
-      // sixMonthData: [],
-      // sixCloseData: [],
+      change: [],
       closeValues: [],
       labels: [],
       quantity: '',
+      sellAmount: '',
       portfolio: [],
       numberOfShares: 0,
       AVGPrice: 0,
@@ -117,11 +120,11 @@ export default {
       }
     },
 
-    // getSixCloseValues(){
-    //   for (let data of this.sixMonthData){
-    //     this.sixCloseValues.push(data.close);
-    //   }
-    // },
+    getChange(){
+      for (let data of this.stockData){
+        this.change.push(data.change)
+      }
+    },
 
     getLabels(){
       for(let data of this.stockData){
@@ -165,6 +168,22 @@ export default {
       StockService.postStock(purchase)
       .then(data => eventBus.$emit('refresh-data'))
       .then(this.$router.push('/stocks'))
+    },
+
+    sellStock(e){
+      e.preventDefault()
+      if(parseInt(this.sellAmount, 10) === this.numberOfShares){
+        StockService.deleteStock(this.id);
+      }
+      const sell = {
+        symbol: this.stockInfo.symbol,
+        companyName: this.stockInfo.companyName,
+        numberOfShares: this.numberOfShares - parseInt(this.sellAmount, 10),
+        AVGPrice: this.AVGPrice
+      }
+      StockService.putStock(sell, this.id)
+      .then(data => eventBus.$emit('refresh-data'))
+      .then(this.$router.push('/stocks'))
     }
 
 
@@ -172,12 +191,6 @@ export default {
 
   mounted(){
     if(!this.stock) this.$router.push('/stocks');
-
-    // if (this.selectedStock) fetch(`https://api.iextrading.com/1.0/stock/${this.selectedStock.symbol}/chart/6m`)
-    // .then(response => response.json())
-    // .then((details) => {
-    //   this.sixMonthData = details;
-    // });
 
     if (this.selectedStock) fetch(`https://api.iextrading.com/1.0/stock/${this.selectedStock.symbol}/batch?types=quote,news,chart&range=1m&last=10`)
     .then(response => response.json())
@@ -187,10 +200,11 @@ export default {
       this.getCloseValues();
       this.getLabels();
       this.getVolume();
+      this.getChange();
 
       const info = this.stockInfo;
       this.latestPrice = info.latestPrice;
-      ChartService.createChart("stock-price-chart", this.closeValues, this.labels, this.volume);
+      ChartService.createChart("stock-price-chart", this.closeValues, this.labels, this.volume, this.change);
 
       info.marketCap = this.currency(info.marketCap);
       info.week52High = this.currency(info.week52High);
@@ -284,7 +298,7 @@ input[type=submit]{
   padding: 5px;
   border: 4px solid #D7D9D8;
   border-radius: 6px;
-  width: 12%;
+  width: 20%;
 }
 
 input[type=submit]:hover {

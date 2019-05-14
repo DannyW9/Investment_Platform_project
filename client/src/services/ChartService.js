@@ -1,5 +1,5 @@
 export default {
-  createChart(name, data, labels, data2){
+  createChart(name, data, labels, data2, data3){
     const ctx = name;
     var myChart = new Chart(ctx, {
       type: 'line',
@@ -16,6 +16,13 @@ export default {
             label: 'Volume',
             data: data2,
             borderColor: 'black',
+            borderWidth: 2,
+            hidden: true
+          },
+          {
+            label: 'Change',
+            data: data3,
+            borderColor: 'yellow',
             borderWidth: 2,
             hidden: true
           }

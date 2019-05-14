@@ -7,7 +7,7 @@
      <h2>Your Investments</h2>
 
    <div  v-if="portfolio.length > 1">
-     <h1>Your Investments</h1>
+
 
     <List :portfolio= 'portfolio'/>
     <portfolioAnalysis :portfolio='portfolio'/>
@@ -58,6 +58,10 @@ export default {
 .margin {
      padding-top: 5%;
      padding-left: 25%;
-}
+    }
+
+h1, h2 {
+       font-family: sans-serif;
+    }
 
 </style>

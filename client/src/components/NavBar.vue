@@ -6,7 +6,7 @@
 <br>
 <br>
 <br>
-  <router-link :to="{ name: 'stockview'}"><h1 class="h">My Portfolio</h1></router-link>
+  <router-link :to="{ name: 'stocks'}"><h1 class="h">My Portfolio</h1></router-link>
     <SearchBar/>
 </nav>
 </template>

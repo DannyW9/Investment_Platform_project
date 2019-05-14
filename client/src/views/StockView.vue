@@ -304,4 +304,8 @@ input[type=number]{
   box-sizing: border-box;
 }
 
+h1, h2 {
+       font-family: sans-serif;
+    }
+
 </style>

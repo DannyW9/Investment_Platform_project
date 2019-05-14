@@ -76,9 +76,12 @@ export default {
       })})
 
 
-    ChartService.DivChart("diversification", this.valueOfInvestment, this.sectors);
-  }
+      .then(() => {
+        ChartService.DivChart("diversification", this.valueOfInvestment, this.sectors);
+      })
 
+
+  }
 }
 </script>
 

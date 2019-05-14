@@ -90,9 +90,12 @@ export default {
       selectedStock: this.stock,
       stockInfo: {},
       stockData: [],
+      volume: [],
+      // sixMonthData: [],
+      // sixCloseData: [],
       closeValues: [],
       labels: [],
-      quantity: 0,
+      quantity: '',
       portfolio: [],
       numberOfShares: 0,
       AVGPrice: 0,
@@ -107,6 +110,18 @@ export default {
         this.closeValues.push(data.close);
       }
     },
+
+    getVolume(){
+      for (let data of this.stockData){
+        this.volume.push(data.volume)
+      }
+    },
+
+    // getSixCloseValues(){
+    //   for (let data of this.sixMonthData){
+    //     this.sixCloseValues.push(data.close);
+    //   }
+    // },
 
     getLabels(){
       for(let data of this.stockData){
@@ -158,6 +173,12 @@ export default {
   mounted(){
     if(!this.stock) this.$router.push('/stocks');
 
+    // if (this.selectedStock) fetch(`https://api.iextrading.com/1.0/stock/${this.selectedStock.symbol}/chart/6m`)
+    // .then(response => response.json())
+    // .then((details) => {
+    //   this.sixMonthData = details;
+    // });
+
     if (this.selectedStock) fetch(`https://api.iextrading.com/1.0/stock/${this.selectedStock.symbol}/batch?types=quote,news,chart&range=1m&last=10`)
     .then(response => response.json())
     .then((details) => {
@@ -165,33 +186,37 @@ export default {
       this.stockData = details.chart;
       this.getCloseValues();
       this.getLabels();
-      this.latestPrice = this.stockInfo.latestPrice;
-      ChartService.createChart("stock-price-chart", this.closeValues, this.labels);
-      this.stockInfo.marketCap = this.currency(this.stockInfo.marketCap);
-      this.stockInfo.week52High = this.currency(this.stockInfo.week52High);
-      this.stockInfo.week52Low = this.currency(this.stockInfo.week52Low);
-      this.stockInfo.latestPrice = this.currency(this.stockInfo.latestPrice);
-      this.stockInfo.open = this.currency(this.stockInfo.open);
-      this.stockInfo.previousClose = this.currency(this.stockInfo.previousClose);
-      this.stockInfo.latestVolume = this.numberChange(this.stockInfo.latestVolume);
-      this.stockInfo.avgTotalVolume = this.numberChange(this.stockInfo.avgTotalVolume);
-      this.stockInfo.changePercent = this.percentage(this.stockInfo.changePercent);
-      this.stockInfo.ytdChange = this.percentage(this.stockInfo.ytdChange);
+      this.getVolume();
+
+      const info = this.stockInfo;
+      this.latestPrice = info.latestPrice;
+      ChartService.createChart("stock-price-chart", this.closeValues, this.labels, this.volume);
+
+      info.marketCap = this.currency(info.marketCap);
+      info.week52High = this.currency(info.week52High);
+      info.week52Low = this.currency(info.week52Low);
+      info.latestPrice = this.currency(info.latestPrice);
+      info.open = this.currency(info.open);
+      info.previousClose = this.currency(info.previousClose);
+
+      info.latestVolume = this.numberChange(info.latestVolume);
+      info.avgTotalVolume = this.numberChange(info.avgTotalVolume);
+
+      info.changePercent = this.percentage(info.changePercent);
+      info.ytdChange = this.percentage(info.ytdChange);
+
       StockService.getStocks()
       .then(portfolio => this.portfolio = portfolio)
       .then(() => {
         this.portfolio.forEach((stock) => {
-          if(stock.symbol === this.stockInfo.symbol){
+          if(stock.symbol === info.symbol){
             this.numberOfShares = stock.numberOfShares;
             this.AVGPrice = stock.AVGPrice;
             this.id = stock._id;
-          }
+          };
         });
-      })
+      });
     });
-
-
-
 
 
   }
@@ -247,6 +272,33 @@ canvas {
 
 .red {
   color: red;
+}
+
+input[type=submit]{
+  background-color: #D7D9D8;
+  text-transform: uppercase;
+  color: green;
+  padding: 5px;
+  border: 4px solid #D7D9D8;
+  border-radius: 6px;
+  width: 12%;
+}
+
+input[type=submit]:hover {
+  color: white;
+  background-color: limegreen;
+  border-color: limegreen;
+  transition: all 0.4s ease 0s;
+}
+
+input[type=number]{
+  width: 12%;
+  padding: 7px;
+  margin: 10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 </style>

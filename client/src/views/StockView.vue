@@ -135,7 +135,8 @@ export default {
         AVGPrice: ((this.numberOfShares * this.AVGPrice) + ((parseInt(this.quantity, 10)) * this.latestPrice)) / (this.numberOfShares + parseInt(this.quantity, 10))
       }
       StockService.putStock(purchase, this.id)
-      .then(data => console.log('update stuff', data))
+      .then(data => eventBus.$emit('refresh-data'))
+      .then(this.$router.push('/stocks'))
     },
 
     purchaseStock(e){

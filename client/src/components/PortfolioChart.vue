@@ -48,6 +48,16 @@ export default {
     })
   })
 
+  .then(() => {
+
+
+  this.charts.forEach((stock) => {
+    stock.forEach((day) => {
+      this.chartData[day.label] = this.chartData[day.label] ? this.chartData[day.label] + day.close: day.close;
+    })
+    console.log(this.chartData);
+  })})
+
 
   ChartService.createChart("portfolio-chart", this.chartData, this.chartLabels);
 }

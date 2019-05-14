@@ -54,10 +54,11 @@ export default {
     padding-left: 2px;
     }
 
-   .search-container {
-    width:50%;
+.search-container {
+    width:97%;
+    padding-top: 6px;
     padding-left: 6px;
-    padding-left: 6px;
+
    }
 
 </style>

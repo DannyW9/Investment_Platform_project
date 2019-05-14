@@ -23,10 +23,6 @@ export default {
   z-index: 2;
   }
 
-.input {
-  font-size:22pt;
-  }
-
 .h {
      font-size: 340%;
      text-align: center;
@@ -34,10 +30,6 @@ export default {
      color: #ff6a00;
    }
 
-   .search-container {
-     width:50%;
-     float:left;
-     padding-top: 20px;
-   }
+
 
 </style>

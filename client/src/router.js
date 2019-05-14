@@ -8,6 +8,11 @@ Vue.use(Router);
 export const router = new Router({
   routes: [
     {
+      path: '/',
+      name: 'stocks',
+      component: PortfolioView
+    },
+    {
       path: '/stocks',
       name: 'stocks',
       component: PortfolioView

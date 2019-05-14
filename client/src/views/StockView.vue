@@ -195,6 +195,7 @@ export default {
 
 
   }
+
 }
 </script>
 
@@ -226,6 +227,8 @@ export default {
 }
 
 .stock-info {
+  padding-top: 5%;
+  padding-left: 15%;
   text-align: center;
 }
 

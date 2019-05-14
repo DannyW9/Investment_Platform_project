@@ -2,7 +2,7 @@
 
     <div class="search-container">
       <input type="text" class="input" v-model='searchValue' placeholder="Search for Company" v-on:input='displaySearchData'>
-      <ul>
+      <ul class="nodot">
         <searchItem v-for="stock in stockFound" :stock ='stock' v-if='searchValue'/>
       </ul>
 
@@ -59,6 +59,10 @@ export default {
     padding-top: 6px;
     padding-left: 6px;
 
+   }
+   .nodot {
+     list-style-type: none;
+     list-style: none;
    }
 
 </style>

@@ -94,5 +94,6 @@ export default {
 h1, h2 {
        font-family: sans-serif;
     }
-    
+
+
 </style>

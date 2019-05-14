@@ -1,6 +1,8 @@
 <template lang="html">
   <div class="">
-  <p>Total Value: ${{(this.totalValue).toFixed(2)}}</p>
+    <div class="value">
+      <p>Total Value: ${{(this.totalValue).toFixed(2)}}</p>
+    </div>
   <div class="">
   <canvas id="portfolio-chart"></canvas>
   </div>
@@ -21,7 +23,8 @@ export default {
       chartData:[],
       chartValues:[],
       chartLabels:[],
-      charts:[]
+      charts:[],
+      holdingValues:[]
     }
   },
 
@@ -39,7 +42,12 @@ export default {
     .then(() => {
 
       this.quotes.map((stock) => {
-        this.values.push(stock['latestPrice'])
+        this.portfolio.forEach((share) => {
+          if(share.symbol === stock.symbol){
+            this.values.push((stock['latestPrice'] * share.numberOfShares))
+          }
+        })
+
       })
     })
     .then(() => {
@@ -69,4 +77,12 @@ export default {
 </script>
 
 <style lang="css" scoped>
+canvas {
+  width: 50%;
+  margin: auto;
+}
+
+.value{
+  text-align: center;
+}
 </style>

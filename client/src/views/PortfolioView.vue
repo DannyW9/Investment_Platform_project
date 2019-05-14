@@ -1,12 +1,12 @@
 <template lang="html">
 
 
-   <div>
+   <div class ="margin">
      <h1>Portfolio</h1>
      <portfolioChart :portfolio='portfolio' v-if="portfolio.length > 1"/>
      <h2>Your Investments</h2>
 
-   <div class ="margin" v-if="portfolio.length > 1">
+   <div  v-if="portfolio.length > 1">
      <h1>Your Investments</h1>
 
     <List :portfolio= 'portfolio'/>

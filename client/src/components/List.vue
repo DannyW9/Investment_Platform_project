@@ -1,7 +1,7 @@
 <template lang="html">
 <div class="">
 <ul>
-  <listItem v-for="stock in portfolio" :stock ='stock' :portfolio='portfolio'/>
+  <listItem id='listItem' v-for="stock in portfolio" :stock ='stock' :portfolio='portfolio'/>
 </ul>
 </div>
 </template>
@@ -18,4 +18,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+
 </style>

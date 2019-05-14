@@ -2,6 +2,7 @@
  <div id='app'>
 
     <NavBar/>
+    <Banner/>
 
    <h1>Investment Hub</h1>
    <SearchBar/>
@@ -13,6 +14,7 @@
 import PortfolioView from './views/PortfolioView.vue';
 import SearchBar from './components/SearchBar.vue';
 import NavBar from './components/NavBar.vue';
+import Banner from './components/Banner.vue';
 
 export default {
 
@@ -22,7 +24,8 @@ export default {
   components: {
      PortfolioView,
      SearchBar,
-     NavBar
+     NavBar,
+     Banner
   }
 
 }

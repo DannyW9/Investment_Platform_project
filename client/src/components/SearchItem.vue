@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="">
+  <div class="r">
 
     <router-link :to="{ name: 'stockview', params: {stock} }" >
     <li @click='reset' >{{stock.name}}</li>
@@ -24,4 +24,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+.r {
+     font-family: sans-serif;
+   }
+
 </style>

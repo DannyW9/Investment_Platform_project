@@ -9,17 +9,24 @@
 
     <div class="purchase-form">
       <form v-if="this.numberOfShares > 0" class="purchase" v-on:submit="updateStock" method="put">
-        <label for="quantity"></label>
-        <input type="number" id="quantity" v-model="quantity" placeholder="Enter quantity:" required>
-        <input type="submit" id="purchase" value="Purchase More Shares">
+        <input type="number" class="quantity" v-model="quantity" placeholder="Enter quantity:" min="1" required>
+        <input type="submit" class="purchaseButton" value="Purchase More Shares">
       </form>
 
       <form v-else class="purchase" v-on:submit="purchaseStock" method="post">
-        <label for="quantity"></label>
-        <input type="number" id="quantity" v-model="quantity" placeholder="Enter quantity:" required>
-        <input type="submit" id="purchase" value="Purchase Shares">
+        <input type="number" class="quantity" v-model="quantity" placeholder="Enter quantity:" min="1" required>
+        <input type="submit" class="purchaseButton" value="Purchase Shares">
       </form>
     </div>
+
+    <p v-if="this.numberOfShares">You currently own {{this.numberOfShares}} shares in {{this.stockInfo.companyName}}</p>
+
+    <form v-if="this.numberOfShares" class="sell" v-on:submit="sellStock" method="post">
+      <input type="number" class="quantity" v-model="sellAmount" placeholder="Enter quantity:" min="1" :max="this.numberOfShares" required>
+      <input type="submit" class="sellButton" value="Sell Shares">
+    </form>
+
+    <p v-if="this.sellAmount">Selling {{this.sellAmount}} shares in {{this.stockInfo.companyName}} will result in a net <span :class="this.profitLoss() ? 'green' : 'red'">{{this.profitLoss()}}</span> of <span :class="this.profitLoss() ? 'green' : 'red'">{{this.checkAmount()}}</span> </p>
 
     <div id="stock-data">
 
@@ -91,11 +98,11 @@ export default {
       stockInfo: {},
       stockData: [],
       volume: [],
-      // sixMonthData: [],
-      // sixCloseData: [],
+      change: [],
       closeValues: [],
       labels: [],
       quantity: '',
+      sellAmount: '',
       portfolio: [],
       numberOfShares: 0,
       AVGPrice: 0,
@@ -117,16 +124,29 @@ export default {
       }
     },
 
-    // getSixCloseValues(){
-    //   for (let data of this.sixMonthData){
-    //     this.sixCloseValues.push(data.close);
-    //   }
-    // },
+    getChange(){
+      for (let data of this.stockData){
+        this.change.push(data.change)
+      }
+    },
 
     getLabels(){
       for(let data of this.stockData){
         this.labels.push(data.label);
       }
+    },
+
+    profitLoss(){
+      if(this.AVGPrice < this.latestPrice){
+        return 'PROFIT';
+      } else {
+        return 'LOSS';
+      }
+    },
+
+    checkAmount(){
+      const amount = (this.latestPrice * parseInt(this.sellAmount, 10)) - (this.AVGPrice * parseInt(this.sellAmount, 10));
+      return this.currency(amount);
     },
 
     numberChange(x){
@@ -165,6 +185,22 @@ export default {
       StockService.postStock(purchase)
       .then(data => eventBus.$emit('refresh-data'))
       .then(this.$router.push('/stocks'))
+    },
+
+    sellStock(e){
+      e.preventDefault()
+      if(parseInt(this.sellAmount, 10) === this.numberOfShares){
+        StockService.deleteStock(this.id);
+      }
+      const sell = {
+        symbol: this.stockInfo.symbol,
+        companyName: this.stockInfo.companyName,
+        numberOfShares: this.numberOfShares - parseInt(this.sellAmount, 10),
+        AVGPrice: this.AVGPrice
+      }
+      StockService.putStock(sell, this.id)
+      .then(data => eventBus.$emit('refresh-data'))
+      .then(this.$router.push('/stocks'))
     }
 
 
@@ -172,12 +208,6 @@ export default {
 
   mounted(){
     if(!this.stock) this.$router.push('/stocks');
-
-    // if (this.selectedStock) fetch(`https://api.iextrading.com/1.0/stock/${this.selectedStock.symbol}/chart/6m`)
-    // .then(response => response.json())
-    // .then((details) => {
-    //   this.sixMonthData = details;
-    // });
 
     if (this.selectedStock) fetch(`https://api.iextrading.com/1.0/stock/${this.selectedStock.symbol}/batch?types=quote,news,chart&range=1m&last=10`)
     .then(response => response.json())
@@ -187,10 +217,11 @@ export default {
       this.getCloseValues();
       this.getLabels();
       this.getVolume();
+      this.getChange();
 
       const info = this.stockInfo;
       this.latestPrice = info.latestPrice;
-      ChartService.createChart("stock-price-chart", this.closeValues, this.labels, this.volume);
+      ChartService.createChart("stock-price-chart", this.closeValues, this.labels, this.volume, this.change);
 
       info.marketCap = this.currency(info.marketCap);
       info.week52High = this.currency(info.week52High);
@@ -277,20 +308,37 @@ canvas {
   color: red;
 }
 
-input[type=submit]{
+.purchaseButton{
   background-color: #D7D9D8;
   text-transform: uppercase;
   color: green;
   padding: 5px;
   border: 4px solid #D7D9D8;
   border-radius: 6px;
-  width: 12%;
+  width: 20%;
 }
 
-input[type=submit]:hover {
+.purchaseButton:hover {
   color: white;
   background-color: limegreen;
   border-color: limegreen;
+  transition: all 0.4s ease 0s;
+}
+
+.sellButton {
+  background-color: #D7D9D8;
+  text-transform: uppercase;
+  color: red;
+  padding: 5px;
+  border: 4px solid #D7D9D8;
+  border-radius: 6px;
+  width: 20%;
+}
+
+.sellButton:hover {
+  color: white;
+  background-color: red;
+  border-color: red;
   transition: all 0.4s ease 0s;
 }
 

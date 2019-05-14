@@ -81,6 +81,7 @@ import Chart from 'chart.js';
 import numeral from 'numeral-es6';
 import ChartService from '@/services/ChartService.js';
 import StockService from '@/services/StockService.js';
+import { eventBus } from '@/main.js';
 export default {
   name: "stockView",
   props: ["stock"],
@@ -134,7 +135,8 @@ export default {
         AVGPrice: ((this.numberOfShares * this.AVGPrice) + ((parseInt(this.quantity, 10)) * this.latestPrice)) / (this.numberOfShares + parseInt(this.quantity, 10))
       }
       StockService.putStock(purchase, this.id)
-      .then(data => console.log('update stuff', data))
+      .then(data => eventBus.$emit('refresh-data'))
+      .then(this.$router.push('/stocks'))
     },
 
     purchaseStock(e){
@@ -146,7 +148,8 @@ export default {
         AVGPrice: this.latestPrice
       }
       StockService.postStock(purchase)
-      .then(data => console.log('purchase stuff', data))
+      .then(data => eventBus.$emit('refresh-data'))
+      .then(this.$router.push('/stocks'))
     }
 
 

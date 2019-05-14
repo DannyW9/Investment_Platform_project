@@ -26,6 +26,8 @@
       <input type="submit" class="sellButton" value="Sell Shares">
     </form>
 
+    <p v-if="this.sellAmount">Selling {{this.sellAmount}} shares in {{this.stockInfo.companyName}} will result in a net <span :class="this.profitLoss() ? 'green' : 'red'">{{this.profitLoss()}}</span> of <span :class="this.profitLoss() ? 'green' : 'red'">{{this.checkAmount()}}</span> </p>
+
     <div id="stock-data">
 
       <div>
@@ -132,6 +134,19 @@ export default {
       for(let data of this.stockData){
         this.labels.push(data.label);
       }
+    },
+
+    profitLoss(){
+      if(this.AVGPrice < this.latestPrice){
+        return 'PROFIT';
+      } else {
+        return 'LOSS';
+      }
+    },
+
+    checkAmount(){
+      const amount = (this.latestPrice * parseInt(this.sellAmount, 10)) - (this.AVGPrice * parseInt(this.sellAmount, 10));
+      return this.currency(amount);
     },
 
     numberChange(x){

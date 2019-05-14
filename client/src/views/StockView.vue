@@ -10,18 +10,18 @@
     <div class="purchase-form">
       <form v-if="this.numberOfShares > 0" class="purchase" v-on:submit="updateStock" method="put">
         <input type="number" class="quantity" v-model="quantity" placeholder="Enter quantity:" min="1" required>
-        <input type="submit" class="purchase" value="Purchase More Shares">
+        <input type="submit" class="purchaseButton" value="Purchase More Shares">
       </form>
 
       <form v-else class="purchase" v-on:submit="purchaseStock" method="post">
         <input type="number" class="quantity" v-model="quantity" placeholder="Enter quantity:" min="1" required>
-        <input type="submit" class="purchase" value="Purchase Shares">
+        <input type="submit" class="purchaseButton" value="Purchase Shares">
       </form>
     </div>
 
     <form class="sell" v-on:submit="sellStock" method="post">
       <input type="number" class="quantity" v-model="sellAmount" placeholder="Enter quantity:" min="1" :max="this.numberOfShares" required>
-      <input type="submit" class="sell" value="Sell Shares">
+      <input type="submit" class="sellButton" value="Sell Shares">
     </form>
 
     <div id="stock-data">
@@ -291,7 +291,7 @@ canvas {
   color: red;
 }
 
-input[type=submit]{
+.purchaseButton{
   background-color: #D7D9D8;
   text-transform: uppercase;
   color: green;
@@ -301,10 +301,27 @@ input[type=submit]{
   width: 20%;
 }
 
-input[type=submit]:hover {
+.purchaseButton:hover {
   color: white;
   background-color: limegreen;
   border-color: limegreen;
+  transition: all 0.4s ease 0s;
+}
+
+.sellButton {
+  background-color: #D7D9D8;
+  text-transform: uppercase;
+  color: red;
+  padding: 5px;
+  border: 4px solid #D7D9D8;
+  border-radius: 6px;
+  width: 20%;
+}
+
+.sellButton:hover {
+  color: white;
+  background-color: red;
+  border-color: red;
   transition: all 0.4s ease 0s;
 }
 

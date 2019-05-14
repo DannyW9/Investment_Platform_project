@@ -1,6 +1,14 @@
 <template lang="html">
+
+  
+   <div>
+     <h1>Portfolio</h1>
+     <portfolioChart :portfolio='portfolio'/>
+     <h2>Your Investments</h2>
+
    <div class ="margin" v-if="portfolio.length > 1">
      <h1>Your Investments</h1>
+
     <List :portfolio= 'portfolio'/>
     <portfolioAnalysis :portfolio='portfolio'/>
    </div>
@@ -9,9 +17,13 @@
 <script>
 import List from '../components/List.vue';
 import ListItem from '../components/ListItem.vue';
-import PortfolioAnalysis from '../components/PortfolioAnalysis.vue'
+import PortfolioAnalysis from '../components/PortfolioAnalysis.vue';
 import StockService from '@/services/StockService.js';
+
+import PortfolioChart from '../components/PortfolioChart.vue';
+
 import { eventBus } from '../main.js';
+
 
 export default {
   name: 'portfolioView',
@@ -23,7 +35,8 @@ export default {
     components: {
     List,
     ListItem,
-    PortfolioAnalysis
+    PortfolioAnalysis,
+    PortfolioChart
   },
   mounted(){
     this.fetchData();

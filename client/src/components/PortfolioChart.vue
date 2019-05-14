@@ -9,7 +9,7 @@
 
 <script>
 import Chart from 'chart.js';
-import ChartService from '../services/ChartService.js';
+import ChartService from '@/services/ChartService.js';
 export default {
   name: 'Portfolio-chart',
   props:['portfolio'],
@@ -19,6 +19,7 @@ export default {
       values:[],
       totalValue:0,
       chartData:[],
+      chartValues:[],
       chartLabels:[],
       charts:[]
     }
@@ -55,11 +56,15 @@ export default {
     stock.forEach((day) => {
       this.chartData[day.label] = this.chartData[day.label] ? this.chartData[day.label] + day.close: day.close;
     })
-    console.log(this.chartData);
-  })})
+  })
+  this.chartValues = Object.values(this.chartData)
+  this.chartLabels = Object.keys(this.chartData)
+  })
 
+.then(() => {
+  ChartService.portfolioChart("portfolio-chart", this.chartValues, this.chartLabels);
+})
 
-  ChartService.createChart("portfolio-chart", this.chartData, this.chartLabels);
 }
 }
 </script>

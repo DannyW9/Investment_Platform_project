@@ -19,14 +19,14 @@
       </form>
     </div>
 
-    <p v-if="this.numberOfShares">You currently own {{this.numberOfShares}} shares in {{this.stockInfo.companyName}}</p>
+    <p v-if="numberOfShares">You currently own {{numberOfShares}} shares in {{stockInfo.companyName}}</p>
 
-    <form v-if="this.numberOfShares" class="sell" v-on:submit="sellStock" method="post">
-      <input type="number" class="quantity" v-model="sellAmount" placeholder="Enter quantity:" min="1" :max="this.numberOfShares" required>
+    <form v-if="numberOfShares" class="sell" v-on:submit="sellStock" method="post">
+      <input type="number" class="quantity" v-model="sellAmount" placeholder="Enter quantity:" min="1" :max="numberOfShares" required>
       <input type="submit" class="sellButton" value="Sell Shares">
     </form>
 
-    <p v-if="this.sellAmount">Selling {{this.sellAmount}} shares in {{this.stockInfo.companyName}} will result in a net <span :class="this.profitLoss() ? 'green' : 'red'">{{this.profitLoss()}}</span> of <span :class="this.profitLoss() ? 'green' : 'red'">{{this.checkAmount()}}</span> </p>
+    <p v-if="sellAmount">Selling {{sellAmount}} shares in {{stockInfo.companyName}} will result in a net <span :class="AVGPrice < latestPrice ? 'green' : 'red'">{{profitLoss()}}</span> of <span :class="AVGPrice < latestPrice ? 'green' : 'red'">{{checkAmount()}}</span> </p>
 
     <div id="stock-data">
 

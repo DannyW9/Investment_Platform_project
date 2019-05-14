@@ -6,14 +6,22 @@
 <br>
 <br>
 <br>
-  <router-link :to="{ name: 'stocks'}">My Portfolio</router-link>
-  <br>
-  <router-link :to="{ name: 'stockview'}">Buy Stocks</router-link>
+  <router-link :to="{ name: 'stockview'}"><h1 class="h">My Portfolio</h1></router-link>
+    <SearchBar/>
 </nav>
 </template>
 
 <script>
+import {eventBus} from '../main.js'
+import SearchBar from './SearchBar.vue'
+import SearchItem from './SearchItem.vue'
+
 export default {
+  name: 'navbar',
+  components: {
+    SearchBar
+  }
+  // props: ['portfolio']
 }
 </script>
 
@@ -49,8 +57,7 @@ export default {
 .h {
      /* font-size: 340%; */
      text-align: center;
-     font-family: 'Orbitron', sans-serif;
-     color: #ff6a00;
+     font-family: sans-serif;
    }
 
 </style>

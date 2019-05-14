@@ -11,6 +11,7 @@ import List from '../components/List.vue';
 import ListItem from '../components/ListItem.vue';
 import PortfolioAnalysis from '../components/PortfolioAnalysis.vue'
 import StockService from '@/services/StockService.js';
+import { eventBus } from '../main.js';
 
 export default {
   name: 'portfolioView',
@@ -25,8 +26,14 @@ export default {
     PortfolioAnalysis
   },
   mounted(){
-    StockService.getStocks()
-      .then(portfolio => this.portfolio = portfolio)
+    this.fetchData();
+    eventBus.$on('refresh-data', this.fetchData);
+  },
+  methods: {
+    fetchData(){
+      StockService.getStocks()
+      .then(portfolio => this.portfolio = portfolio);
+    }
   }
 
 }

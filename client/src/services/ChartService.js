@@ -55,7 +55,7 @@ export default {
         datasets: [{
           label: 'Portfolio',
           data: data,
-          borderColor: '#36495d',
+          borderColor: '#FF6A00',
           borderWidth: 2
         }]
       },

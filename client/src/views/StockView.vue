@@ -72,6 +72,7 @@
             <p class="heading">YTD Change</p>
             <p>{{ (stockInfo.ytdChange) }}</p>
             <hr>
+
           </div>
         </div>
       </div>
@@ -81,6 +82,7 @@
     </div>
 
   </div>
+
 </template>
 
 <script>
@@ -355,5 +357,4 @@ input[type=number]{
 h1, h2 {
        font-family: sans-serif;
     }
-
 </style>

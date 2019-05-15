@@ -19,13 +19,12 @@ export default {
   background-size: cover;
   position: fixed;
   top: 0;
-  /* height: 10%; */
   width: 100%;
   z-index: 2;
   }
 
 h1 {
-     font-size: 200%;
+     font-size: 230%;
      text-align: center;
      font-family: sans-serif;
      color: #ff6a00;
@@ -37,7 +36,6 @@ h1 {
      margin-bottom: 1%;
 
      float: left;
-     /* float: center; */
      width: 6%;
      height: 3%
       }

@@ -3,7 +3,9 @@
   <h2>Portfolio Analysis</h2>
   <div class="doughnut">
   <canvas id="diversification"></canvas>
+  <p>Portfolio performance: {{(this.performance).toFixed(2)}}%</p>
   </div>
+
   </div>
 </template>
 
@@ -22,7 +24,12 @@ export default {
       obj:{},
       newArray: [],
       array:[],
-      unique:[]
+      unique:[],
+      AvgTotal: [],
+      currentTotal:[],
+      start:0,
+      current: 0,
+      performance: 0
     }
   },
 
@@ -80,7 +87,28 @@ export default {
         ChartService.DivChart("diversification", this.valueOfInvestment, this.sectors);
       })
 
+      .then(() => {
+        this.portfolio.forEach((holding) => {
+          this.quotes.forEach((quote) => {
+            if(holding.symbol === quote.symbol){
+            this.AvgTotal.push(holding.AVGPrice * holding.numberOfShares)
+            this.currentTotal.push(quote.latestPrice * holding.numberOfShares)
+          }
+          })
 
+        })
+
+
+      })
+      .then(() => {
+        this.start = this.AvgTotal.reduce((total, num) => {
+          return total + num
+        })
+        this.current = this.currentTotal.reduce((total, num) => {
+          return total + num
+        })
+        this.performance = (this.current - this.start)/this.start * 100;
+      })
   }
 }
 </script>

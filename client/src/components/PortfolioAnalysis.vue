@@ -120,6 +120,7 @@ export default {
   padding-bottom: 0px;
   width: 70%;
   height: 80%;
+  margin-left: 14%;
 }
 
 h1, h2 {

@@ -50,14 +50,14 @@ export default {
 <style lang="css" scoped>
 
 .input {
-    font-size:15pt;
+    font-size:17pt;
     padding-left: 2px;
     }
 
 .search-container {
-    width:97%;
     padding-top: 6px;
-    padding-left: 6px;
+    padding-left: 8px;
+    resize: horizontal;
 
    }
    .nodot {

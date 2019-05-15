@@ -30,6 +30,10 @@
 
     <stockData :stockInfo="stockInfo"/>
 
+    <hr class="split">
+
+    <newsFeed :stockNews="stockNews"/>
+
   </div>
 
 </template>
@@ -37,6 +41,7 @@
 <script>
 import Chart from 'chart.js';
 import StockData from '@/components/StockData.vue'
+import NewsFeed from '@/components/NewsFeed.vue'
 import numeral from 'numeral-es6';
 import ChartService from '@/services/ChartService.js';
 import StockService from '@/services/StockService.js';
@@ -49,6 +54,7 @@ export default {
       selectedStock: this.stock,
       stockInfo: {},
       stockData: [],
+      stockNews: [],
       volume: [],
       change: [],
       closeValues: [],
@@ -64,7 +70,8 @@ export default {
   },
 
   components: {
-    StockData
+    StockData,
+    NewsFeed
   },
 
   methods: {
@@ -170,6 +177,7 @@ export default {
     .then((details) => {
       this.stockInfo = details.quote;
       this.stockData = details.chart;
+      this.stockNews = details.news;
       this.getCloseValues();
       this.getLabels();
       this.getVolume();
@@ -213,31 +221,6 @@ export default {
 
 <style lang="css" scoped>
 
-.vertical {
-  border-left: 4px solid #FF6A00;
-  height: 200px;
-  padding: 10px;
-  margin-left: 50px;
-  margin-right: 50px;
-}
-
-.heading{
-  font-size: 12px;
-  text-transform: uppercase;
-}
-
-.inner-div {
-  margin-left: 30px;
-}
-
-#left-div, #right-div {
-  text-align: left;
-  line-height: 0.3;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
 .stock-info {
   padding-top: 5%;
   padding-left: 15%;
@@ -247,13 +230,6 @@ export default {
 canvas {
   width: 50%;
   margin: auto;
-}
-
-#stock-data {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: center;
 }
 
 .green {
@@ -311,5 +287,9 @@ input[type=number]{
 h1, h2 {
        font-family: sans-serif;
     }
+
+.split {
+  border-top: 4px solid #FF6A00;
+}
 
 </style>

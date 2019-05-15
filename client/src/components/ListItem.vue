@@ -1,10 +1,10 @@
 <template lang="html">
 <div class="item">
   <router-link :to="{ name: 'stockview', params: {stock} }">
-<li id ='item' class="nodot">
-  <p>{{ stock.companyName }}</p>
-  <p>No. of Shares: {{stock.numberOfShares}}</p>
-  <p>Value: ${{ (stock.numberOfShares * this.quote.latestPrice).toFixed(2)}}</p>
+<li id ='item'>
+  <h3>{{ stock.companyName }}</h3><br>
+  <p>No. of Shares: {{stock.numberOfShares}}</p><br>
+  <p>Value: ${{ (stock.numberOfShares * this.quote.latestPrice).toFixed(2)}}</p><br>
   <p>{{(this.change).toFixed(2)}}%</p>
 </li>
 </router-link>
@@ -49,9 +49,34 @@ mounted(){
 .item{
   border: solid;
   text-decoration: none;
+  margin-left: 20%;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+      width: 50%;
+      border-radius: 5%;
+      border-color: #FF6A00;
 }
-.nodot {
+h3 {
+   width: 100%;
+   text-align: center;
+   font-family: sans-serif;
+}
+li {
   list-style-type: none;
   list-style: none;
+  font-family: sans-serif;
 }
+a {
+  text-decoration:  none;
+  color: black;
+  margin-left: 20px;
+}
+#item{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 </style>

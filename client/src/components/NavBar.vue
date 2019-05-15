@@ -6,7 +6,8 @@
 <br>
 <br>
 <br>
-  <router-link :to="{ name: 'stocks'}"><h1 class="h">My Portfolio</h1></router-link>
+  <router-link :to="{ name: 'stocks'}"><h1>My Portfolio</h1></router-link>
+  <br>
     <SearchBar/>
 </nav>
 </template>
@@ -54,8 +55,7 @@ export default {
     color: white;
 }
 
-.h {
-     /* font-size: 340%; */
+h1 {
      text-align: center;
      font-family: sans-serif;
    }

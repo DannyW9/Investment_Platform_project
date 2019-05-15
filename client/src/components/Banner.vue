@@ -1,10 +1,10 @@
 <template lang="html">
 <div class="b">
-     <h1 class="h">Investment Hub</h1>
+         <a href="https://codeclan.com"><img class="logo" src="../img/logo.png" alt="CodeClan Homepage" title="Codeclan Homepage"></a>
+         <h1>Investment Hub</h1>
 </div>
 </template>
 
-<script>
 
 export default {
     name: 'Banner'
@@ -23,13 +23,21 @@ export default {
   z-index: 2;
   }
 
-.h {
-     font-size: 340%;
+h1 {
+     font-size: 230%;
      text-align: center;
      font-family: sans-serif;
      color: #ff6a00;
    }
 
+.logo {
+     margin-top: 1%;
+     margin-left: 1%;
+     margin-bottom: 1%;
 
+     float: left;
+     width: 6%;
+     height: 3%
+      }
 
 </style>

@@ -92,6 +92,10 @@ export default {
       title: {
         display: true,
         text: 'Diversification by Sector'
+      },
+      animation: {
+        animateRotate: true,
+        animateScale: true
       }
     }
 })}

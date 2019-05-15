@@ -5,7 +5,6 @@
     <Banner/>
 
    <h1>Investment Hub</h1>
-   <SearchBar/>
    <router-view id='view'/>
  </div>
 </template>

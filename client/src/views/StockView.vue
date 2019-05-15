@@ -26,6 +26,7 @@
 
     <p v-if="sellAmount">Selling {{sellAmount}} shares in {{stockInfo.companyName}} will result in a net <span :class="AVGPrice < latestPrice ? 'green' : 'red'">{{profitLoss()}}</span> of <span :class="AVGPrice < latestPrice ? 'green' : 'red'">{{checkAmount()}}</span> </p>
 
+
     <stockData :stockInfo="stockInfo"/>
 
     <hr class="split">

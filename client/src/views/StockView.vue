@@ -1,10 +1,8 @@
 <template lang="html">
   <div class="stock-info">
 
-    <h1>{{stockInfo.companyName}} ({{stockInfo.symbol}})</h1>
-    <h2>{{stockInfo.latestPrice}}</h2>
-    <h3 :class="stockInfo.change < 0 ? 'red' : 'green'">{{stockInfo.change}} ({{stockInfo.changePercent}})</h3>
-    <p>Primary Exchange: {{stockInfo.primaryExchange}}</p>
+    <StockInfo :stockInfo="stockInfo"/>
+
     <canvas id="stock-price-chart"></canvas>
 
     <div class="purchase-form">
@@ -40,8 +38,9 @@
 
 <script>
 import Chart from 'chart.js';
-import StockData from '@/components/StockData.vue'
-import NewsFeed from '@/components/NewsFeed.vue'
+import StockInfo from '@/components/StockInfo.vue';
+import StockData from '@/components/StockData.vue';
+import NewsFeed from '@/components/NewsFeed.vue';
 import numeral from 'numeral-es6';
 import ChartService from '@/services/ChartService.js';
 import StockService from '@/services/StockService.js';
@@ -70,6 +69,7 @@ export default {
   },
 
   components: {
+    StockInfo,
     StockData,
     NewsFeed
   },
@@ -283,10 +283,6 @@ input[type=number]{
   border-radius: 4px;
   box-sizing: border-box;
 }
-
-h1, h2 {
-       font-family: sans-serif;
-    }
 
 .split {
   border-top: 4px solid #FF6A00;
